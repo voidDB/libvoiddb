@@ -35,6 +35,8 @@ int voiddb_cursor_get_(VOIDDB_cursor *cursor, VOIDDB_slice key,
 	int64_t length;
 	int64_t pointer;
 
+	struct ancestor *stack = cursor->stack.array;
+
 	e = voiddb_cursor_get_node(cursor->medium, cursor->offset, false,
 				   &node);
 	if (e != 0) {
@@ -56,7 +58,7 @@ fall:
 		return 0;
 	}
 
-	((struct ancestor *)(cursor->stack.array))[cursor->stack.length] =
+	stack[cursor->stack.length] =
 		(struct ancestor){ cursor->offset, cursor->index };
 
 	cursor->stack.length++;

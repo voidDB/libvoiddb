@@ -2,6 +2,9 @@
 
 #include "common.h"
 
+#define VOIDDB_CURSOR_MAX_KEY_LENGTH VOIDDB_NODE_MAX_KEY_LENGTH
+#define VOIDDB_CURSOR_MAX_VALUE_LENGTH UINT32_MAX
+
 typedef struct VOIDDB_cursor VOIDDB_cursor;
 
 typedef struct VOIDDB_cursor_medium {

@@ -17,16 +17,16 @@ int voiddb_cursor_get_prev_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 	int e;
 	int64_t length;
 	int64_t pointer;
-	struct ancestor parent;
+
+	struct ancestor *stack = cursor->stack.array;
 
 	if (cursor->index < 0 && cursor->stack.length == 0) {
 		return VOIDDB_ERROR_NOT_FOUND;
 
 	} else if (cursor->index < 0) {
-		parent = ((struct ancestor *)(cursor->stack.array))
-			[cursor->stack.length - 1];
+		cursor->offset = stack[cursor->stack.length - 1].offset;
 
-		cursor->offset, cursor->index = parent.offset, parent.index;
+		cursor->index = stack[cursor->stack.length - 1].index;
 
 		cursor->stack.length--;
 
@@ -58,7 +58,7 @@ int voiddb_cursor_get_prev_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 		return 0;
 	}
 
-	((struct ancestor *)(cursor->stack.array))[cursor->stack.length] =
+	stack[cursor->stack.length] =
 		(struct ancestor){ cursor->offset, cursor->index };
 
 	cursor->stack.length++;

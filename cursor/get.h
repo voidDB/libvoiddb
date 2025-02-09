@@ -1,7 +1,3 @@
-#include "../include/common.h"
-#include "../include/cursor.h"
-
-#include "cursor.h"
 #include "get-next.h"
 #include "get-node.h"
 #include "get-prev.h"

@@ -17,11 +17,6 @@ struct VOIDDB_cursor {
 	VOIDDB_slice latest;
 };
 
-VOIDDB_cursor *voiddb_cursor_new_cursor(VOIDDB_cursor_medium *medium,
-					int64_t offset);
-
-void voiddb_cursor_free(VOIDDB_cursor *cursor);
-
 void voiddb_cursor_reset(VOIDDB_cursor *cursor);
 
 void voiddb_cursor_resume(VOIDDB_cursor *cursor);

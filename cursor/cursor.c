@@ -27,9 +27,10 @@ void voiddb_cursor_free(VOIDDB_cursor *cursor)
 
 void voiddb_cursor_reset(VOIDDB_cursor *cursor)
 {
+	struct ancestor *stack = cursor->stack.array;
+
 	if (cursor->stack.length > 0) {
-		cursor->offset =
-			((struct ancestor *)(cursor->stack.array))[0].offset;
+		cursor->offset = stack[0].offset;
 
 		cursor->stack.length = 0;
 	}
