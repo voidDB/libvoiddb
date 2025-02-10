@@ -53,7 +53,8 @@ fall:
 		return VOIDDB_ERROR_NOT_FOUND;
 
 	} else if (length > 0) {
-		*value = cursor->medium->load(cursor->offset, cursor->index);
+		*value = cursor->medium->load(cursor->medium, cursor->offset,
+					      cursor->index);
 
 		return 0;
 	}

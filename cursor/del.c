@@ -19,12 +19,12 @@ int voiddb_cursor_del_(VOIDDB_cursor *cursor)
 
 	voiddb_node_value_or_child(old_node, cursor->index, &pointer, &length);
 
-	cursor->medium->free(pointer, length);
+	cursor->medium->free(cursor->medium, pointer, length);
 
 	voiddb_node_update(old_node, cursor->index, VOIDDB_CURSOR_TOMBSTONE, 0,
 			   cursor->medium->meta(), &new_node);
 
-	pointer = cursor->medium->save(new_node);
+	pointer = cursor->medium->save(cursor->medium, new_node);
 
 	cursor->offset = pointer;
 
@@ -38,7 +38,7 @@ int voiddb_cursor_del_(VOIDDB_cursor *cursor)
 		voiddb_node_update(old_node, stack[i].index, pointer, 0,
 				   cursor->medium->meta(), &new_node);
 
-		pointer = cursor->medium->save(new_node);
+		pointer = cursor->medium->save(cursor->medium, new_node);
 
 		stack[i].offset = pointer;
 	}

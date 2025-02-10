@@ -25,7 +25,7 @@ int voiddb_cursor_get_next_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 	if (length > 0) {
 		*key = voiddb_node_key(node, cursor->index);
 
-		*value = cursor->medium->load(pointer, length);
+		*value = cursor->medium->load(cursor->medium, pointer, length);
 
 		return 0;
 

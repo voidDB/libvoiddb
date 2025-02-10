@@ -34,7 +34,7 @@ int voiddb_cursor_put_(VOIDDB_cursor_medium *medium, int64_t offset,
 				   &new_node_1, promoted);
 
 	} else if (length > 0) {
-		medium->free(pointer, length);
+		medium->free(medium, pointer, length);
 
 		goto fall;
 
@@ -64,10 +64,10 @@ fall:
 		}
 	}
 
-	*pointer_0 = medium->save(new_node_0);
+	*pointer_0 = medium->save(medium, new_node_0);
 
 	if (new_node_1.array == NULL) {
-		*pointer_1 = medium->save(new_node_1);
+		*pointer_1 = medium->save(medium, new_node_1);
 	}
 
 end:
@@ -102,8 +102,9 @@ fall:
 	voiddb_cursor_reset(cursor);
 
 	e = voiddb_cursor_put_(cursor->medium, cursor->offset,
-			       cursor->medium->save(value), value.length, key,
-			       &pointer_0, &pointer_1, &promoted);
+			       cursor->medium->save(cursor->medium, value),
+			       value.length, key, &pointer_0, &pointer_1,
+			       &promoted);
 	if (e != 0) {
 		return e;
 	}
@@ -118,7 +119,7 @@ fall:
 				   pointer_1, 0, promoted,
 				   cursor->medium->meta(), &new_root, &_0, &_1);
 
-		cursor->offset = cursor->medium->save(new_root);
+		cursor->offset = cursor->medium->save(cursor->medium, new_root);
 	}
 
 	return 0;

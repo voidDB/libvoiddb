@@ -5,14 +5,14 @@ int voiddb_cursor_get_node(VOIDDB_cursor_medium *medium, int64_t offset,
 			   // out
 			   VOIDDB_slice *node)
 {
-	*node = medium->load(offset, VOIDDB_PAGE_SIZE);
+	*node = medium->load(medium, offset, VOIDDB_PAGE_SIZE);
 
 	if (!voiddb_node_is_node(*node)) {
 		return VOIDDB_ERROR_CORRUPT;
 	}
 
 	if (free) {
-		medium->free(offset, VOIDDB_PAGE_SIZE);
+		medium->free(medium, offset, VOIDDB_PAGE_SIZE);
 	}
 
 	return 0;
