@@ -49,9 +49,9 @@ int64_t voiddb_node_elem_get_pointer(VOIDDB_slice elem)
 	return voiddb_common_get_int(voiddb_node_elem_pointer(elem));
 }
 
-int voiddb_node_elem_set_pointer(VOIDDB_slice elem, int64_t length)
+int voiddb_node_elem_set_pointer(VOIDDB_slice elem, int64_t pointer)
 {
-	return voiddb_common_put_int(voiddb_node_elem_pointer(elem), length);
+	return voiddb_common_put_int(voiddb_node_elem_pointer(elem), pointer);
 }
 
 VOIDDB_slice voiddb_node_elem_extra_metadata(VOIDDB_slice elem)

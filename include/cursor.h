@@ -15,3 +15,12 @@ typedef struct VOIDDB_cursor_medium {
 
 	void *ether;
 } VOIDDB_cursor_medium;
+
+VOIDDB_cursor *voiddb_cursor_new_cursor(VOIDDB_cursor_medium *medium,
+					int64_t offset);
+
+int voiddb_cursor_put(VOIDDB_cursor *cursor, VOIDDB_slice key,
+		      VOIDDB_slice value);
+
+int voiddb_cursor_get(VOIDDB_cursor *cursor, VOIDDB_slice key,
+		      VOIDDB_slice *value);

@@ -1,6 +1,5 @@
 #include "../include/node.h"
 
-#include "copy.h"
 #include "node.h"
 
 void voiddb_node_update(VOIDDB_slice node, int64_t index, int64_t pointer,

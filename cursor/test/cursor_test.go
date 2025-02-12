@@ -12,10 +12,10 @@ func TestCursor(t *testing.T) {
 	var (
 		scenarioInitializer = func(sc *godog.ScenarioContext) {
 			steps.AddStepNewTree(sc)
-			//steps.AddStepPut(sc)
-			//steps.AddStepGet(sc)
+			steps.AddStepNewCursor(sc)
+			steps.AddStepPut(sc)
+			steps.AddStepGet(sc)
 			//steps.AddStepDel(sc)
-			//steps.AddStepNewCursor(sc)
 			//steps.AddStepGetNext(sc)
 			//steps.AddStepGetPrev(sc)
 			//steps.AddStepGetFirst(sc)

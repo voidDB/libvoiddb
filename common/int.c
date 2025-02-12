@@ -49,6 +49,8 @@ int voiddb_common_put_int(VOIDDB_slice slice, int64_t i)
 		array[6] = (uint8_t)(i >> 8);
 		array[7] = (uint8_t)i;
 
+		break;
+
 	case VOIDDB_HALF_SIZE:
 		if (i > UINT32_MAX) {
 			goto bad;
@@ -58,6 +60,8 @@ int voiddb_common_put_int(VOIDDB_slice slice, int64_t i)
 		array[1] = (uint8_t)(i >> 16);
 		array[2] = (uint8_t)(i >> 8);
 		array[3] = (uint8_t)i;
+
+		break;
 	}
 
 	return 0;

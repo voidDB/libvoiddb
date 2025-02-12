@@ -1,7 +1,5 @@
-#include "../include/common.h"
 #include "../include/node.h"
 
-#include "copy.h"
 #include "node.h"
 
 void voiddb_node_search(VOIDDB_slice node, VOIDDB_slice key,
@@ -10,7 +8,7 @@ void voiddb_node_search(VOIDDB_slice node, VOIDDB_slice key,
 {
 	int result = 0;
 
-	for (*index = 0; *index < voiddb_node_length(node); *index++) {
+	for (*index = 0; *index < voiddb_node_length(node); (*index)++) {
 		result = voiddb_common_compare(key,
 					       voiddb_node_key(node, *index));
 
@@ -25,7 +23,9 @@ void voiddb_node_search(VOIDDB_slice node, VOIDDB_slice key,
 		return;
 
 	} else if (*length > 0) {
-		*pointer, *length = 0, 0;
+		*pointer = 0;
+
+		*length = 0;
 	}
 
 	return;

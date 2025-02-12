@@ -14,7 +14,7 @@ int voiddb_cursor_put_(VOIDDB_cursor_medium *medium, int64_t offset,
 		       VOIDDB_slice *promoted)
 {
 	VOIDDB_slice new_node_0;
-	VOIDDB_slice new_node_1;
+	VOIDDB_slice new_node_1 = {};
 	VOIDDB_slice old_node;
 	int e;
 	int64_t index;
@@ -66,7 +66,7 @@ fall:
 
 	*pointer_0 = medium->save(medium, new_node_0);
 
-	if (new_node_1.array == NULL) {
+	if (new_node_1.array != NULL) {
 		*pointer_1 = medium->save(medium, new_node_1);
 	}
 
@@ -83,7 +83,7 @@ int voiddb_cursor_put(VOIDDB_cursor *cursor, VOIDDB_slice key,
 	VOIDDB_slice promoted;
 	int e;
 	int64_t pointer_0;
-	int64_t pointer_1;
+	int64_t pointer_1 = 0;
 
 	if (key.length == 0) {
 		goto fall;
@@ -101,12 +101,14 @@ fall:
 
 	voiddb_cursor_reset(cursor);
 
+	promoted = (VOIDDB_slice){ malloc(VOIDDB_NODE_MAX_KEY_LENGTH), 0 };
+
 	e = voiddb_cursor_put_(cursor->medium, cursor->offset,
 			       cursor->medium->save(cursor->medium, value),
 			       value.length, key, &pointer_0, &pointer_1,
 			       &promoted);
 	if (e != 0) {
-		return e;
+		goto end;
 	}
 
 	cursor->latest = key;
@@ -122,5 +124,8 @@ fall:
 		cursor->offset = cursor->medium->save(cursor->medium, new_root);
 	}
 
-	return 0;
+end:
+	free(promoted.array);
+
+	return e;
 }

@@ -20,24 +20,11 @@ int64_t medium_save(VOIDDB_cursor_medium *medium, VOIDDB_slice data)
 			     data.length % VOIDDB_PAGE_SIZE;
 	}
 
-	VOIDDB_slice *new_ether = malloc(sizeof(VOIDDB_slice));
-
-	*new_ether = (VOIDDB_slice){ malloc(new_length), new_length };
-
-	if (ether.length > 0) {
-		memcpy(new_ether->array, ether.array, ether.length);
-
-		free(ether.array);
-	}
-
 	if (data.length > 0) {
-		memcpy(new_ether->array + ether.length, data.array,
-		       data.length);
+		memcpy(ether.array + ether.length, data.array, data.length);
 	}
 
-	free(medium->ether);
-
-	medium->ether = new_ether;
+	((VOIDDB_slice *)(medium->ether))->length = new_length;
 
 	return pointer;
 }
@@ -64,11 +51,9 @@ VOIDDB_cursor_medium *new_medium()
 	medium->load = &medium_load;
 	medium->free = &medium_free;
 
-	VOIDDB_slice *ether = malloc(sizeof(VOIDDB_slice));
+	medium->ether = malloc(sizeof(VOIDDB_slice));
 
-	ether->length = 0;
-
-	medium->ether = ether;
+	*(VOIDDB_slice *)(medium->ether) = (VOIDDB_slice){ malloc(1048576), 0 };
 
 	return medium;
 }
