@@ -40,7 +40,9 @@ int voiddb_cursor_get_next_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 
 		cursor->stack.length++;
 
-		cursor->offset, cursor->index = pointer, 0;
+		cursor->offset = pointer;
+
+		cursor->index = 0;
 
 		goto recur;
 	}
@@ -49,7 +51,7 @@ end:
 	if (cursor->stack.length > 0) {
 		cursor->offset = stack[cursor->stack.length - 1].offset;
 
-		cursor->index = stack[cursor->stack.length - 1].index;
+		cursor->index = stack[cursor->stack.length - 1].index + 1;
 
 		cursor->stack.length--;
 

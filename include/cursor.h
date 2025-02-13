@@ -24,3 +24,17 @@ int voiddb_cursor_put(VOIDDB_cursor *cursor, VOIDDB_slice key,
 
 int voiddb_cursor_get(VOIDDB_cursor *cursor, VOIDDB_slice key,
 		      VOIDDB_slice *value);
+
+int voiddb_cursor_get_next(VOIDDB_cursor *cursor, VOIDDB_slice *key,
+			   VOIDDB_slice *value);
+
+int voiddb_cursor_get_prev(VOIDDB_cursor *cursor, VOIDDB_slice *key,
+			   VOIDDB_slice *value);
+
+int voiddb_cursor_get_first(VOIDDB_cursor *cursor, VOIDDB_slice *key,
+			    VOIDDB_slice *value);
+
+int voiddb_cursor_get_last(VOIDDB_cursor *cursor, VOIDDB_slice *key,
+			   VOIDDB_slice *value);
+
+int voiddb_cursor_del(VOIDDB_cursor *cursor);

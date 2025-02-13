@@ -1,6 +1,3 @@
-#include <stdbool.h>
-#include <stdint.h>
-
 #include "common.h"
 
 #define VOIDDB_NODE_MAX_KEY_LENGTH 512

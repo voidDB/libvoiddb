@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <string.h>
 
 #include "../include/common.h"
 #include "../include/cursor.h"
@@ -79,6 +80,7 @@ int voiddb_cursor_put(VOIDDB_cursor *cursor, VOIDDB_slice key,
 {
 	VOIDDB_slice _0;
 	VOIDDB_slice _1;
+	VOIDDB_slice new_node;
 	VOIDDB_slice new_root;
 	VOIDDB_slice promoted;
 	int e;
@@ -111,17 +113,23 @@ fall:
 		goto end;
 	}
 
-	cursor->latest = key;
+	memcpy(cursor->latest.array, key.array, key.length);
+
+	cursor->latest.length = key.length;
 
 	if (pointer_1 == 0) {
 		cursor->offset = pointer_0;
 
 	} else {
-		voiddb_node_insert(voiddb_node_new_node(), 0, pointer_0,
-				   pointer_1, 0, promoted,
-				   cursor->medium->meta(), &new_root, &_0, &_1);
+		new_node = voiddb_node_new_node();
+
+		voiddb_node_insert(new_node, 0, pointer_0, pointer_1, 0,
+				   promoted, cursor->medium->meta(), &new_root,
+				   &_0, &_1);
 
 		cursor->offset = cursor->medium->save(cursor->medium, new_root);
+
+		free(new_node.array);
 	}
 
 end:

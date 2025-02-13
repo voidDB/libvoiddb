@@ -15,11 +15,11 @@ func TestCursor(t *testing.T) {
 			steps.AddStepNewCursor(sc)
 			steps.AddStepPut(sc)
 			steps.AddStepGet(sc)
-			//steps.AddStepDel(sc)
-			//steps.AddStepGetNext(sc)
-			//steps.AddStepGetPrev(sc)
-			//steps.AddStepGetFirst(sc)
-			//steps.AddStepGetLast(sc)
+			steps.AddStepGetNext(sc)
+			steps.AddStepGetPrev(sc)
+			steps.AddStepGetFirst(sc)
+			steps.AddStepGetLast(sc)
+			steps.AddStepDel(sc)
 		}
 
 		options = &godog.Options{

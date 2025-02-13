@@ -46,3 +46,10 @@ int voiddb_cursor_del_(VOIDDB_cursor *cursor)
 end:
 	return e;
 }
+
+int voiddb_cursor_del(VOIDDB_cursor *cursor)
+{
+	voiddb_cursor_resume(cursor);
+
+	return voiddb_cursor_del_(cursor);
+}
