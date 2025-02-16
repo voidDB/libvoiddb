@@ -34,10 +34,12 @@ func put(ctx0 context.Context, key, value, name string) (
 			C.VOIDDB_slice{
 				C.CBytes(keySlice),
 				C.int64_t(len(keySlice)),
+				nil,
 			},
 			C.VOIDDB_slice{
 				C.CBytes(valueSlice),
 				C.int64_t(len(valueSlice)),
+				nil,
 			},
 		)
 	)

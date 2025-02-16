@@ -14,6 +14,7 @@
 typedef struct VOIDDB_slice {
 	void *array;
 	int64_t length;
+	void *free_me;
 } VOIDDB_slice;
 
 int voiddb_common_compare(VOIDDB_slice a, VOIDDB_slice b);

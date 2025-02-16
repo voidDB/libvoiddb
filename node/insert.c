@@ -55,7 +55,6 @@ void voiddb_node_insert(VOIDDB_slice node, int64_t index, int64_t pointer_l,
 			VOIDDB_slice *new_node_l, VOIDDB_slice *new_node_r,
 			VOIDDB_slice *promoted)
 {
-	VOIDDB_slice ephemeral;
 	VOIDDB_slice new_node = voiddb_node_new_node();
 	int i;
 
@@ -81,16 +80,11 @@ void voiddb_node_insert(VOIDDB_slice node, int64_t index, int64_t pointer_l,
 	}
 
 	if (voiddb_node_length(node) + 1 == VOIDDB_NODE_MAX_NODE_LENGTH) {
-		voiddb_node_split(new_node, new_node_l, new_node_r, &ephemeral);
+		voiddb_node_split(new_node, new_node_l, new_node_r, promoted);
 
-		// ephemeral is a slice of new_node.array, and the latter is about to
-		// be free()-ed; promoted has to be a copy of ephemeral to outlive it.
-		memcpy(promoted->array, ephemeral.array, ephemeral.length);
-
-		promoted->length = ephemeral.length;
-		// ***
-
-		free(new_node.array);
+		promoted->free_me = new_node.array;
+		// new_node will be out of scope after return; the caller should free()
+		// new_node.array via its address retained in promoted->free_me.
 
 		return;
 	}

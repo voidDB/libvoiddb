@@ -45,8 +45,8 @@ fall:
 				   medium->meta(), &new_node_0);
 
 	} else {
-		voiddb_cursor_put_(medium, pointer, put_pointer, put_length,
-				   key, pointer_0, pointer_1, promoted);
+		e = voiddb_cursor_put_(medium, pointer, put_pointer, put_length,
+				       key, pointer_0, pointer_1, promoted);
 		if (e != 0) {
 			goto end;
 		}
@@ -82,7 +82,7 @@ int voiddb_cursor_put(VOIDDB_cursor *cursor, VOIDDB_slice key,
 	VOIDDB_slice _1;
 	VOIDDB_slice new_node;
 	VOIDDB_slice new_root;
-	VOIDDB_slice promoted;
+	VOIDDB_slice promoted = {};
 	int e;
 	int64_t pointer_0;
 	int64_t pointer_1 = 0;
@@ -102,8 +102,6 @@ fall:
 	}
 
 	voiddb_cursor_reset(cursor);
-
-	promoted = (VOIDDB_slice){ malloc(VOIDDB_NODE_MAX_KEY_LENGTH), 0 };
 
 	e = voiddb_cursor_put_(cursor->medium, cursor->offset,
 			       cursor->medium->save(cursor->medium, value),
@@ -133,7 +131,7 @@ fall:
 	}
 
 end:
-	free(promoted.array);
+	free(promoted.free_me);
 
 	return e;
 }

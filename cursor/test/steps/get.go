@@ -35,6 +35,7 @@ func get(ctx0 context.Context, key, valueExpect, name string) (
 			C.VOIDDB_slice{
 				C.CBytes(keySlice),
 				C.int64_t(len(keySlice)),
+				nil,
 			},
 			valueActual,
 		)
