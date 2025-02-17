@@ -111,9 +111,7 @@ fall:
 		goto end;
 	}
 
-	memcpy(cursor->latest.array, key.array, key.length);
-
-	cursor->latest.length = key.length;
+	cursor->latest = key;
 
 	if (pointer_1 == 0) {
 		cursor->offset = pointer_0;

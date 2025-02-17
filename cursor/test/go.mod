@@ -1,6 +1,6 @@
 module test
 
-go 1.22.3
+go 1.19
 
 require (
 	github.com/cucumber/godog v0.15.0
