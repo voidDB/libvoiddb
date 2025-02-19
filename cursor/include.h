@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "../common/include.h"
 
 #define VOIDDB_CURSOR_MAX_KEY_LENGTH VOIDDB_NODE_MAX_KEY_LENGTH
 #define VOIDDB_CURSOR_MAX_VALUE_LENGTH UINT32_MAX

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../../include/cursor.h"
+#include "../../../cursor/include.h"
 
 VOIDDB_slice medium_meta();
 

@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../common/include.h"
 
 #define VOIDDB_NODE_MAX_KEY_LENGTH 512
 #define VOIDDB_NODE_MAX_NODE_LENGTH 7

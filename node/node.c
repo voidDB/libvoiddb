@@ -1,3 +1,5 @@
+#include "include.h"
+
 #include "node.h"
 
 VOIDDB_slice voiddb_node_new_node()

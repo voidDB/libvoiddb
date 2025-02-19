@@ -1,7 +1,7 @@
 package steps
 
 /*
-#include "../../../include/cursor.h"
+#include "../../../cursor/include.h"
 */
 import "C"
 

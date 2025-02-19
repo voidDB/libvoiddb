@@ -4,7 +4,8 @@ package steps
 #cgo CFLAGS: -g -Wall
 #cgo LDFLAGS: -L../lib -lvoiddb
 
-#include "../../../include/node.h"
+#include "../../../cursor/include.h"
+#include "../../../node/include.h"
 
 #include "medium.h"
 */

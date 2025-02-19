@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include "../include/common.h"
+#include "include.h"
 
 int voiddb_common_compare(VOIDDB_slice a, VOIDDB_slice b)
 {

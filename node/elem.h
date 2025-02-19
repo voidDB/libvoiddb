@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include "../include/node.h"
+#include "include.h"
 
 VOIDDB_slice voiddb_node_elem(VOIDDB_slice node, int64_t index);
 

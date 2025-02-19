@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include "../include/cursor.h"
+#include "include.h"
 
 #include "get.h"
 

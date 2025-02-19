@@ -1,9 +1,10 @@
 #include <errno.h>
 #include <string.h>
 
-#include "../include/common.h"
-#include "../include/cursor.h"
-#include "../include/node.h"
+#include "../common/include.h"
+#include "../node/include.h"
+
+#include "include.h"
 
 #include "cursor.h"
 

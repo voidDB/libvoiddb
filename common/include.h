@@ -27,3 +27,7 @@ VOIDDB_slice voiddb_common_field(VOIDDB_slice slice, int64_t offset,
 int64_t voiddb_common_get_int(VOIDDB_slice slice);
 
 int voiddb_common_put_int(VOIDDB_slice slice, int64_t i);
+
+uint64_t voiddb_common_get_uint64(VOIDDB_slice slice);
+
+int voiddb_common_put_uint64(VOIDDB_slice slice, uint64_t u);

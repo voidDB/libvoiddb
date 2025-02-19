@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include "../include/common.h"
+#include "../common/include.h"
 
 VOIDDB_slice voiddb_node_meta(VOIDDB_slice node);
 

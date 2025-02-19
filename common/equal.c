@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include "../include/common.h"
+#include "include.h"
 
 bool voiddb_common_equal(VOIDDB_slice a, VOIDDB_slice b)
 {

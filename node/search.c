@@ -1,4 +1,4 @@
-#include "../include/node.h"
+#include "include.h"
 
 #include "node.h"
 

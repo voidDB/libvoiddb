@@ -1,4 +1,4 @@
-#include "../include/common.h"
+#include "include.h"
 
 VOIDDB_slice voiddb_common_field(VOIDDB_slice slice, int64_t offset,
 				 int64_t length)
