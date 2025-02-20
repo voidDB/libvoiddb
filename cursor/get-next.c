@@ -22,17 +22,15 @@ int voiddb_cursor_get_next_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 
 	voiddb_node_value_or_child(node, cursor->index, &pointer, &length);
 
-	if (length > 0) {
+	if (pointer == VOIDDB_CURSOR_TOMBSTONE) {
+		return VOIDDB_ERROR_DELETED;
+
+	} else if (length > 0) {
 		*key = voiddb_node_key(node, cursor->index);
 
 		*value = cursor->medium->load(cursor->medium, pointer, length);
 
 		return 0;
-
-	} else if (pointer == VOIDDB_CURSOR_TOMBSTONE) {
-		cursor->index++;
-
-		goto recur;
 
 	} else if (pointer > 0) {
 		stack[cursor->stack.length] =
@@ -67,9 +65,19 @@ recur:
 int voiddb_cursor_get_next(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 			   VOIDDB_slice *value)
 {
+	int e;
+
 	voiddb_cursor_resume(cursor);
 
-	cursor->index++;
+	while (true) {
+		cursor->index++;
 
-	return voiddb_cursor_get_next_(cursor, key, value);
+		e = voiddb_cursor_get_next_(cursor, key, value);
+
+		if (e != VOIDDB_ERROR_DELETED) {
+			break;
+		}
+	}
+
+	return e;
 }

@@ -3,11 +3,21 @@
 int voiddb_cursor_get_prev(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 			   VOIDDB_slice *value)
 {
+	int e;
+
 	voiddb_cursor_resume(cursor);
 
-	cursor->index--;
+	while (true) {
+		cursor->index--;
 
-	return voiddb_cursor_get_prev_(cursor, key, value);
+		e = voiddb_cursor_get_prev_(cursor, key, value);
+
+		if (e != VOIDDB_ERROR_DELETED) {
+			break;
+		}
+	}
+
+	return e;
 }
 
 int voiddb_cursor_get_prev_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
@@ -45,7 +55,10 @@ int voiddb_cursor_get_prev_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 
 	voiddb_node_value_or_child(node, cursor->index, &pointer, &length);
 
-	if (pointer == 0 || pointer == VOIDDB_CURSOR_TOMBSTONE) {
+	if (pointer == VOIDDB_CURSOR_TOMBSTONE) {
+		return VOIDDB_ERROR_DELETED;
+
+	} else if (pointer == 0) {
 		cursor->index--;
 
 		goto recur;
@@ -66,8 +79,6 @@ int voiddb_cursor_get_prev_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 	cursor->offset = pointer;
 
 	cursor->index = VOIDDB_NODE_MAX_NODE_LENGTH;
-
-	goto recur;
 
 recur:
 	return voiddb_cursor_get_prev_(cursor, key, value);

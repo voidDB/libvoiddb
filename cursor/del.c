@@ -21,7 +21,7 @@ int voiddb_cursor_del_(VOIDDB_cursor *cursor)
 
 	cursor->medium->free(cursor->medium, pointer, length);
 
-	voiddb_node_update(old_node, cursor->index, VOIDDB_CURSOR_TOMBSTONE, 0,
+	voiddb_node_update(old_node, cursor->index, VOIDDB_CURSOR_TOMBSTONE, -1,
 			   cursor->medium->meta(), &new_node);
 
 	pointer = cursor->medium->save(cursor->medium, new_node);

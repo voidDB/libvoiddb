@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #define VOIDDB_ERROR_CORRUPT -30796
+#define VOIDDB_ERROR_DELETED -30800
 #define VOIDDB_ERROR_NOT_FOUND -30798
 
 #define VOIDDB_PAGE_SIZE 4096

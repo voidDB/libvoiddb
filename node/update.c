@@ -12,8 +12,17 @@ void voiddb_node_update(VOIDDB_slice node, int64_t index, int64_t pointer,
 
 	memcpy((*new_node).array, node.array, VOIDDB_PAGE_SIZE);
 
-	voiddb_node_set_value_or_child(*new_node, index, pointer, length,
-				       metadata);
+	if (length < 0) {
+		voiddb_node_elem_set_pointer(voiddb_node_elem(*new_node, index),
+					     pointer);
+
+		voiddb_node_elem_set_extra_metadata(
+			voiddb_node_elem(*new_node, index), metadata);
+
+	} else {
+		voiddb_node_set_value_or_child(*new_node, index, pointer,
+					       length, metadata);
+	}
 
 	return;
 }
