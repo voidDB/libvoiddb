@@ -23,7 +23,7 @@ int voiddb_cursor_get_last(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 
 	cursor->index = VOIDDB_NODE_MAX_NODE_LENGTH;
 
-	return voiddb_cursor_get_prev_(cursor, key, value);
+	return voiddb_cursor_get_prev(cursor, key, value);
 }
 
 int voiddb_cursor_get_(VOIDDB_cursor *cursor, VOIDDB_slice key,
@@ -45,7 +45,10 @@ int voiddb_cursor_get_(VOIDDB_cursor *cursor, VOIDDB_slice key,
 
 	voiddb_node_search(node, key, &cursor->index, &pointer, &length);
 
-	if (pointer == VOIDDB_CURSOR_TOMBSTONE) {
+	if ((pointer & VOIDDB_CURSOR_GRAVEYARD) > 0) {
+		goto fall;
+
+	} else if (pointer == VOIDDB_CURSOR_TOMBSTONE) {
 		goto fall;
 
 	} else if (pointer == 0) {

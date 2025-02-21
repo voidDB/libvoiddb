@@ -70,16 +70,13 @@ func getNextNotFound(ctx0 context.Context, name string) (
 	var (
 		cursor = ctx.Value(ctxKeyCursor{name}).(*C.VOIDDB_cursor)
 
-		cError C.int = C.voiddb_cursor_get_next(cursor,
-			new(C.VOIDDB_slice),
-			new(C.VOIDDB_slice),
-		)
+		cError C.int = C.voiddb_cursor_get_next(cursor, nil, nil)
 	)
 
 	assert.Equal(
 		godog.T(ctx),
-		cError,
 		C.int(C.VOIDDB_ERROR_NOT_FOUND),
+		cError,
 	)
 
 	return

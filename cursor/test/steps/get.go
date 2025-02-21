@@ -16,6 +16,8 @@ import (
 func AddStepGet(sc *godog.ScenarioContext) {
 	sc.Then(`^I should get "([^"]*)", "([^"]*)" using "([^"]*)"$`, get)
 
+	sc.Then(`^getting "([^"]*)" using "([^"]*)" should not find$`, getNotFound)
+
 	return
 }
 
@@ -54,6 +56,35 @@ func get(ctx0 context.Context, key, valueExpect, name string) (
 			valueActual.array,
 			C.int(valueActual.length),
 		),
+	)
+
+	return
+}
+
+func getNotFound(ctx0 context.Context, key, name string) (
+	ctx context.Context, e error,
+) {
+	ctx = ctx0
+
+	var (
+		cursor = ctx.Value(ctxKeyCursor{name}).(*C.VOIDDB_cursor)
+
+		keySlice = []byte(key)
+
+		cError C.int = C.voiddb_cursor_get(cursor,
+			C.VOIDDB_slice{
+				C.CBytes(keySlice),
+				C.int64_t(len(keySlice)),
+				nil,
+			},
+			nil,
+		)
+	)
+
+	assert.Equal(
+		godog.T(ctx),
+		C.int(C.VOIDDB_ERROR_NOT_FOUND),
+		cError,
 	)
 
 	return

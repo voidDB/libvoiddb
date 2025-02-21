@@ -1,4 +1,5 @@
 #include "cursor.h"
+#include "graveyard.h"
 
 int voiddb_cursor_del_(VOIDDB_cursor *cursor)
 {
@@ -33,6 +34,10 @@ int voiddb_cursor_del_(VOIDDB_cursor *cursor)
 					   true, &old_node);
 		if (e != 0) {
 			goto end;
+		}
+
+		if (voiddb_cursor_is_graveyard(new_node)) {
+			pointer |= VOIDDB_CURSOR_GRAVEYARD;
 		}
 
 		voiddb_node_update(old_node, stack[i].index, pointer, 0,

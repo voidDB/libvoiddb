@@ -6,8 +6,10 @@
 
 #include "get.h"
 
-#define VOIDDB_CURSOR_MAX_STACK_DEPTH 26
 #define VOIDDB_CURSOR_TOMBSTONE 1
+#define VOIDDB_CURSOR_GRAVEYARD 2
+
+#define VOIDDB_CURSOR_MAX_STACK_DEPTH 26
 
 struct VOIDDB_cursor {
 	VOIDDB_cursor_medium *medium;

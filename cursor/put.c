@@ -1,12 +1,7 @@
 #include <errno.h>
-#include <string.h>
-
-#include "../common/include.h"
-#include "../node/include.h"
-
-#include "include.h"
 
 #include "cursor.h"
+#include "graveyard.h"
 
 int voiddb_cursor_put_(VOIDDB_cursor_medium *medium, int64_t offset,
 		       int64_t put_pointer, int64_t put_length,
@@ -29,6 +24,8 @@ int voiddb_cursor_put_(VOIDDB_cursor_medium *medium, int64_t offset,
 	}
 
 	voiddb_node_search(old_node, key, &index, &pointer, &length);
+
+	pointer = pointer & ~VOIDDB_CURSOR_GRAVEYARD;
 
 	if (pointer == 0) {
 		voiddb_node_insert(old_node, index, put_pointer, 0, put_length,
@@ -68,8 +65,18 @@ fall:
 
 	*pointer_0 = medium->save(medium, new_node_0);
 
-	if (new_node_1.array != NULL) {
-		*pointer_1 = medium->save(medium, new_node_1);
+	if (voiddb_cursor_is_graveyard(new_node_0)) {
+		*pointer_0 |= VOIDDB_CURSOR_GRAVEYARD;
+	}
+
+	if (new_node_1.array == NULL) {
+		goto end;
+	}
+
+	*pointer_1 = medium->save(medium, new_node_1);
+
+	if (voiddb_cursor_is_graveyard(new_node_1)) {
+		*pointer_1 |= VOIDDB_CURSOR_GRAVEYARD;
 	}
 
 end:

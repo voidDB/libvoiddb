@@ -55,7 +55,11 @@ int voiddb_cursor_get_prev_(VOIDDB_cursor *cursor, VOIDDB_slice *key,
 
 	voiddb_node_value_or_child(node, cursor->index, &pointer, &length);
 
-	if (pointer == VOIDDB_CURSOR_TOMBSTONE) {
+	if ((pointer & VOIDDB_CURSOR_GRAVEYARD) > 0) {
+		goto fall;
+
+	} else if (pointer == VOIDDB_CURSOR_TOMBSTONE) {
+fall:
 		return VOIDDB_ERROR_DELETED;
 
 	} else if (pointer == 0) {
