@@ -65,12 +65,12 @@ fall:
 
 	*pointer_0 = medium->save(medium, new_node_0);
 
-	if (voiddb_cursor_is_graveyard(new_node_0)) {
-		*pointer_0 |= VOIDDB_CURSOR_GRAVEYARD;
-	}
-
 	if (new_node_1.array == NULL) {
 		goto end;
+	}
+
+	if (voiddb_cursor_is_graveyard(new_node_0)) {
+		*pointer_0 |= VOIDDB_CURSOR_GRAVEYARD;
 	}
 
 	*pointer_1 = medium->save(medium, new_node_1);

@@ -58,13 +58,12 @@ void voiddb_node_insert(VOIDDB_slice node, int64_t index, int64_t pointer_l,
 	VOIDDB_slice new_node = voiddb_node_new_node();
 	int i;
 
-	for (i = 0; i < voiddb_node_length(node); i++) {
-		if (i < index) {
-			voiddb_node_copy_elem_key(new_node, node, i, 0);
+	for (i = 0; i < index; i++) {
+		voiddb_node_copy_elem_key(new_node, node, i, 0);
+	}
 
-		} else {
-			voiddb_node_copy_elem_key(new_node, node, i, 1);
-		}
+	for (i = i; i < voiddb_node_length(node); i++) {
+		voiddb_node_copy_elem_key(new_node, node, i, 1);
 	}
 
 	voiddb_node_copy_elem(new_node, node, i, 1);

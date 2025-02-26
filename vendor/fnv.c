@@ -28,8 +28,8 @@ uint64_t fnv_64a_buf(void *buf, size_t len, uint64_t hval)
 	unsigned char *be = bp + len; /* beyond end of buffer */
 
 	/*
-     * FNV-1a hash each octet of the buffer
-     */
+	 * FNV-1a hash each octet of the buffer
+	 */
 	while (bp < be) {
 		/* xor the bottom with the current octet */
 		hval ^= (uint64_t)*bp++;
